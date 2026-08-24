@@ -46,10 +46,10 @@ int main(){
             cam.MoveRight(speed*dt);
         }
         if (IsKeyDown(KEY_LEFT)){
-            cam.Rotate(1 * dt);
+            cam.Rotate(speed * dt);
         }
         if (IsKeyDown(KEY_RIGHT)){
-            cam.Rotate(-1 * dt);
+            cam.Rotate(-speed * dt);
         }
 
 
@@ -61,7 +61,7 @@ int main(){
 
             vector2f direction = cam.forward + ((cam.right * (PI/4)) * cameraX);
 
-            //direction = direction / sqrt(((direction.x * direction.x)+(direction.y * direction.y)));
+            direction = direction / sqrt(((direction.x * direction.x)+(direction.y * direction.y)));
 
             RayResult result = ray.Cast(cam.GetPosition(), direction, max_distance);
             
@@ -84,9 +84,11 @@ int main(){
                 break;
             }
 
-            if (result.hit_blocked && result.distance > 0){                
-                // Usamos la distancia perpendicular para evitar el ojo de pez
-                int line_height = (int)(height / result.distance);
+            if (result.hit_blocked && result.distance > 0){
+                
+                float distance = result.distance * (direction.dot(cam.forward));
+
+                int line_height = (int)(height / distance);
 
                 int draw_start = -line_height / 2 + height / 2;
                 int draw_end   =  line_height / 2 + height / 2;
@@ -94,7 +96,7 @@ int main(){
                 if (draw_start < 0) draw_start = 0;
                 if (draw_end >= height) draw_end = height - 1;
 
-                float shade = result.distance / max_distance - 0.2; 
+                float shade = distance / max_distance - 0.2; 
 
                 if (shade > 1) shade = 1;
                 else if (shade < 0) shade = 0;

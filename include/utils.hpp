@@ -41,7 +41,7 @@ struct vector2f{
     }
     // Normalizar
     vector2f normalize() const {
-        float length = sqrt(x * x + y * y);
+        float length = magnitude();
         if (length == 0.0f) return vector2f(0.0f, 0.0f);
         return vector2f(x / length, y / length);
     }

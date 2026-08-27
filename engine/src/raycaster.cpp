@@ -3,11 +3,11 @@
 RayResult RayCasting::Cast(vector2f start_pos, vector2f direction, const std::function<bool(vector2i)> RayHits, float max_distance){
 
     // Ray unitary length and normalization
-    float dir_length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
+    float dir_length = direction.magnitude();
     if (dir_length == 0.0f) {
         return RayResult{};
     }
-    direction = direction / dir_length;
+    direction = direction.normalize();
 
     // Position on the map
     vector2i current_tile = {(int)start_pos.x, (int)start_pos.y};

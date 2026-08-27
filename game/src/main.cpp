@@ -32,6 +32,7 @@ int main(){
 
     while (!WindowShouldClose()){
         float dt = GetFrameTime();
+
         //input
         if (IsKeyDown(KEY_W)){
             cam.MoveForward(speed*dt);
@@ -61,7 +62,7 @@ int main(){
 
             vector2f direction = cam.forward + ((cam.right * (PI/4)) * cameraX);
 
-            direction = direction / sqrt(((direction.x * direction.x)+(direction.y * direction.y)));
+            direction = direction.normalize();
 
             RayResult result = ray.Cast(cam.GetPosition(), direction, max_distance);
             

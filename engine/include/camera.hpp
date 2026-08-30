@@ -9,7 +9,7 @@ private:
     float angle = 0;
     
 public:
-    vector2f forward = {0, 1};
+    vector2f forward = {0, -1};
     vector2f right = {1, 0};
 
     //EngineCamera();
